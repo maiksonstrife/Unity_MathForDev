@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Addition : MonoBehaviour
+public class Addition : PagesAbstract
 {
-    private bool[] examples = new bool[7];
-    public bool previous, next;
-    public int currentPage;
-
     public Transform object1;
     private Vector3 newPosition;
 
@@ -18,7 +14,8 @@ public class Addition : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        SetTitle();
+        if (examples.Length < 1) examples = new bool[20];
+        SetTitle("Scaling By Float", 5);
 
         if (!examples[0]) return;
         Example_1();
@@ -36,64 +33,11 @@ public class Addition : MonoBehaviour
         Example_5();
 
         if (!examples[5]) return;
+        SetTitle("Scaling By Float", 7);
         Example_6();
 
         if (!examples[6]) return;
         Example_7();
-    }
-
-    private void SetTitle()
-    {
-        GUIStyle guiStyle = new GUIStyle();
-        guiStyle.fontSize = 20;
-        string title = " ";
-
-        if (currentPage <= 5)
-            title = "Object Position";
-        else if (currentPage > 5 && currentPage <= 7)
-            title = "Conclusion";
-
-        Handles.Label(Vector3.up * 4, title, guiStyle);
-    }
-
-    private void OnValidate()
-    {
-        if (next)
-        {
-            previous = false;
-            currentPage++;
-            if (currentPage >= 7) currentPage = 7;
-            ExamplesController(currentPage, true);
-            next = false;
-        }
-
-        if (previous)
-        {
-            next = false;
-            currentPage--;
-            if (currentPage == -1) currentPage = 0;
-            ExamplesController(currentPage, false);
-            previous = false;
-        }
-    }
-
-    private void ExamplesController(int exampleNumber, bool isNext)
-    {
-        if (!isNext)
-        {
-            for (int i = exampleNumber; i < examples.Length; i++)
-            {
-                examples[i] = false;
-            }
-        }
-
-        if (isNext)
-        {
-            for (int i = 0; i < exampleNumber; i++)
-            {
-                examples[i] = true;
-            }
-        }
     }
 
     private void Example_7()

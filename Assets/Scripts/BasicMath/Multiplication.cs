@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Multiplication : MonoBehaviour
+public class Multiplication : PagesAbstract
 {
-    private bool[] examples = new bool[20];
-    public bool previous, next;
-    public int currentPage;
-
     public Transform object1;
     public Transform object2;
 
@@ -30,7 +26,8 @@ public class Multiplication : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        SetTitle();
+        if (examples.Length < 1) examples = new bool[20];
+        SetTitle("Scaling By Float", 6);
 
         if (!examples[0]) return;
         Example_1();
@@ -51,6 +48,7 @@ public class Multiplication : MonoBehaviour
         Example_6();
 
         if (!examples[6]) return;
+        SetTitle("World Space To Local Space", 13);
         Example_7();
 
         if (!examples[7]) return;
@@ -72,9 +70,11 @@ public class Multiplication : MonoBehaviour
         Example_13();
 
         if (!examples[13]) return;
+        SetTitle("Scaling by Vector", 14);
         Example_14();
 
         if (!examples[14]) return;
+        SetTitle("Lock On Target", 17);
         Example_15();
 
         if (!examples[15]) return;
@@ -84,6 +84,7 @@ public class Multiplication : MonoBehaviour
         Example_17();
 
         if (!examples[17]) return;
+        SetTitle("Normalizing Missile", 20);
         Example_18();
 
         if (!examples[18]) return;
@@ -93,80 +94,20 @@ public class Multiplication : MonoBehaviour
         Example_20();
     }
 
-    private void SetTitle()
-    {
-        GUIStyle guiStyle = new GUIStyle();
-        guiStyle.fontSize = 20;
-        string title = " ";
-
-        if (currentPage <= 6)
-             title = "Scaling By Float";
-        else if (currentPage > 6 && currentPage <= 13)
-             title = "World Space To Local Space";
-        else if (currentPage > 13 && currentPage <= 14)
-             title = "Scaling by Vector";
-        else if (currentPage > 14 && currentPage <= 17)
-             title = "Lock On Target";
-        else if (currentPage > 17 && currentPage <= 20)
-            title = "Normalizing Missile";
-
-        Handles.Label(Vector3.up * 4, title, guiStyle);
-    }
-
-    private void OnValidate()
-    {
-        if (next)
-        {
-            previous = false;
-            currentPage++;
-            if (currentPage >= examples.Length) currentPage = examples.Length;
-            ExamplesController(currentPage, true);
-            next = false;
-        }
-
-        if (previous)
-        {
-            next = false;
-            currentPage--;
-            if (currentPage == -1) currentPage = 0;
-            ExamplesController(currentPage, false);
-            previous = false;
-        }
-    }
-
-    private void ExamplesController(int exampleNumber, bool isNext)
-    {
-        if (!isNext)
-        {
-                for (int i = exampleNumber; i < examples.Length; i++)
-                {
-                    examples[i] = false;
-                }
-        }
-
-        if (isNext)
-        {
-            for (int i = 0; i < exampleNumber; i++)
-            {
-                examples[i] = true;
-            }
-        }
-    }
-
     private void Example_20()
     {
         if (currentPage > 20) return;
         Vector3 target = object2.position - object1.position;
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -0.6f), "Use normalizedMissile to travel using normalized TargetDistance");
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1f), "Use Missile to travel using targetDistance");
+        Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "Use normalizedMissile to travel using normalized TargetDistance");
+        Handles.Label(-Vector3.up + new Vector3(0, -1f), "Use Missile to travel using targetDistance");
         Gizmos.color = Color.magenta;
         Gizmos.DrawLine(object1.position, object1.position + target.normalized);
         Handles.Label(object1.position + target.normalized, "Normalized targetDistance");
 
         Vector3 scalarByDistance = missile * target;
         Vector3 scalarByDirection = normalizedMissile * target.normalized;
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1.4f), "Distance: missile * " + target + " = " + scalarByDistance);
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1.8f), "Normalized Distance: missile * " + target.normalized + " = " + scalarByDirection);
+        Handles.Label(-Vector3.up + new Vector3(0, -1.4f), "Distance: missile * " + target + " = " + scalarByDistance);
+        Handles.Label(-Vector3.up + new Vector3(0, -1.8f), "Normalized Distance: missile * " + target.normalized + " = " + scalarByDirection);
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(object1.position + missile * target, 0.2f);
         Gizmos.color = Color.magenta;
@@ -180,21 +121,12 @@ public class Multiplication : MonoBehaviour
     {
         if (currentPage > 19) return;
         Vector3 target = object2.position - object1.position;
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -0.6f), "If we normalize targetDistance, we get only the direction");
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1f), "That's only 1 unity lenght the targetDistance");
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1.4f), "That way the missile will travel 1 unit each * scalar");
+        Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "If we normalize targetDistance, we get only the direction");
+        Handles.Label(-Vector3.up + new Vector3(0, -1f), "That's only 1 unity lenght the targetDistance");
+        Handles.Label(-Vector3.up + new Vector3(0, -1.4f), "That way the missile will travel 1 unit each * scalar");
         Gizmos.color = Color.magenta;
         Gizmos.DrawLine(object1.position, object1.position + target.normalized);
         Handles.Label(object1.position + target.normalized, "Normalized targetDistance");
-
-        //Vector3 scalarByDistance = missile * target;
-        //Vector3 scalarByDirection = normalizedMissile * target.normalized;
-        //Handles.Label(Vector3.up * 4 + new Vector3(0, -1.4f), "Distance: missile * " + target + " = " + scalarByDistance);
-        //Handles.Label(Vector3.up * 4 + new Vector3(0, -1.8f), "Normalized Distance: missile * " + target.normalized + " = " + scalarByDirection);
-        //Gizmos.DrawSphere(object1.position + missile * target, 0.2f);
-        //Gizmos.color = Color.magenta;
-        //Gizmos.DrawSphere(object1.position + normalizedMissile * scalarByDirection, 0.2f);
-        //Gizmos.DrawLine(object1.position, object1.position + normalizedMissile * scalarByDirection);
     }
 
     private void Example_18()
@@ -202,10 +134,10 @@ public class Multiplication : MonoBehaviour
         if (currentPage > 18) return;
         Vector3 targetDistance = object2.position - object1.position;
         Gizmos.DrawLine(object1.position, object1.position + targetDistance);
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -0.6f), "See how the missile moved super fast?");
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1f), "That's because the scalar missile is multiplying the entire target Position");
+        Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "See how the missile moved super fast?");
+        Handles.Label(-Vector3.up + new Vector3(0, -1f), "That's because the scalar missile is multiplying the entire target Position");
         Vector3 scalarByDistance = missile * targetDistance;
-        Handles.Label(Vector3.up * 4 + new Vector3(0, -1.4f), "missile * " + targetDistance + " = "+ scalarByDistance);
+        Handles.Label(-Vector3.up + new Vector3(0, -1.4f), "missile * " + targetDistance + " = "+ scalarByDistance);
         Gizmos.DrawSphere(object1.position + missile * targetDistance, 0.2f);
     }
 
@@ -219,7 +151,7 @@ public class Multiplication : MonoBehaviour
             Vector3 targetDistance = object2.position - object1.position;
             Gizmos.DrawSphere(object1.position + missile * targetDistance, 0.2f);
             Gizmos.DrawLine(object1.position, object1.position + targetDistance);
-            Handles.Label(Vector3.up * 4 + new Vector3(0,-0.6f), "Use Missile to move along the Path");
+            Handles.Label(-Vector3.up + new Vector3(0,-0.6f), "Use Missile to move along the Path");
     }
 
     private void Example_16()

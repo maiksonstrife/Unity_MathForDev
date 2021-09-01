@@ -4,23 +4,20 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Subtraction : MonoBehaviour
+public class Subtraction : PagesAbstract
 {
-    private bool[] examples = new bool[13];
-    public bool previous, next;
-    public int currentPage;
-
     public Transform object1;
     public Transform object2;
     private Vector3 newPosition;
 
     private void OnDrawGizmos()
     {
-        SetTitle();
+        if (examples.Length < 1) examples = new bool[20];
 
         if (!examples[6])
         {
             if (!examples[0]) return;
+            SetTitle("Vector - Vectort", 6);
             Example_1();
 
             if (!examples[1]) return;
@@ -41,6 +38,7 @@ public class Subtraction : MonoBehaviour
         else
         {
             if (!examples[6]) return;
+            SetTitle("Distance", 11);
             Example_7();
 
             if (!examples[7]) return;
@@ -56,66 +54,11 @@ public class Subtraction : MonoBehaviour
             Example_11();
 
             if (!examples[11]) return;
+            SetTitle("Direction", 13);
             Example_12();
 
             if (!examples[12]) return;
             Example_13();
-        }
-    }
-
-    private void SetTitle()
-    {
-        GUIStyle guiStyle = new GUIStyle();
-        guiStyle.fontSize = 20;
-        string title = " ";
-
-        if (currentPage <= 6)
-            title = "Vector - Vector";
-        else if (currentPage > 6 && currentPage <= 11)
-            title = "Distance";
-        else if (currentPage> 11 && currentPage <= 13)
-            title = "Direction";
-
-        Handles.Label(Vector3.up * 4, title, guiStyle);
-    }
-
-    private void OnValidate()
-    {
-        if (next)
-        {
-            previous = false;
-            currentPage++;
-            if (currentPage >= 13) currentPage = 13;
-            ExamplesController(currentPage, true);
-            next = false;
-        }
-
-        if (previous)
-        {
-            next = false;
-            currentPage--;
-            if (currentPage == -1) currentPage = 0;
-            ExamplesController(currentPage, false);
-            previous = false;
-        }
-    }
-
-    private void ExamplesController(int exampleNumber, bool isNext)
-    {
-        if (!isNext)
-        {
-            for (int i = exampleNumber; i < examples.Length; i++)
-            {
-                examples[i] = false;
-            }
-        }
-
-        if (isNext)
-        {
-            for (int i = 0; i < exampleNumber; i++)
-            {
-                examples[i] = true;
-            }
         }
     }
 
