@@ -6,9 +6,7 @@ using UnityEngine;
 
 public class Scalars : PagesAbstract
 {
-
     public Transform Object1;
-    public Transform Object2;
 
     [Header("What is a Scalar?")]
     [Range(0,1)]
@@ -16,11 +14,12 @@ public class Scalars : PagesAbstract
 
     private void OnDrawGizmos()
     {
-        if(examples.Length < 1) examples = new bool[20];
+        if (examples == null || examples.Length != 5) examples = new bool[5];
+
         Object1.transform.localScale = new Vector3(1, 1, 1);
 
         ExamplesController();
-        SetTitle("What is Scalar", 5);
+        SetTitle("What is Scalar", 1, 5);
         if (examples[0] && currentPage == 1) Example_1();
         if (examples[1] && currentPage == 2) Example_2();
         if (examples[2] && currentPage == 3) Example_3();

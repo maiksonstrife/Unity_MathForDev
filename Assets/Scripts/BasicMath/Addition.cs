@@ -14,8 +14,8 @@ public class Addition : PagesAbstract
 
     private void OnDrawGizmos()
     {
-        if (examples.Length < 1) examples = new bool[20];
-        SetTitle("Scaling By Float", 5);
+        if (examples == null || examples.Length != 7) examples = new bool[7];
+        SetTitle("Scaling By Float", 1, 5);
 
         if (!examples[0]) return;
         Example_1();
@@ -33,7 +33,7 @@ public class Addition : PagesAbstract
         Example_5();
 
         if (!examples[5]) return;
-        SetTitle("Scaling By Float", 7);
+        SetTitle("Scaling By Float", 6, 7);
         Example_6();
 
         if (!examples[6]) return;

@@ -26,8 +26,8 @@ public class Multiplication : PagesAbstract
 
     private void OnDrawGizmos()
     {
-        if (examples.Length < 1) examples = new bool[20];
-        SetTitle("Scaling By Float", 6);
+        if (examples == null || examples.Length != 20) examples = new bool[20];
+        SetTitle("Scaling By Float", 1, 6);
 
         if (!examples[0]) return;
         Example_1();
@@ -48,7 +48,7 @@ public class Multiplication : PagesAbstract
         Example_6();
 
         if (!examples[6]) return;
-        SetTitle("World Space To Local Space", 13);
+        SetTitle("World Space To Local Space", 7, 13);
         Example_7();
 
         if (!examples[7]) return;
@@ -70,11 +70,11 @@ public class Multiplication : PagesAbstract
         Example_13();
 
         if (!examples[13]) return;
-        SetTitle("Scaling by Vector", 14);
+        SetTitle("Scaling by Vector", 14, 14);
         Example_14();
 
         if (!examples[14]) return;
-        SetTitle("Lock On Target", 17);
+        SetTitle("Lock On Target", 15, 17);
         Example_15();
 
         if (!examples[15]) return;
@@ -84,7 +84,7 @@ public class Multiplication : PagesAbstract
         Example_17();
 
         if (!examples[17]) return;
-        SetTitle("Normalizing Missile", 20);
+        SetTitle("Normalizing Missile", 18, 20);
         Example_18();
 
         if (!examples[18]) return;

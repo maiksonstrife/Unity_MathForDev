@@ -12,12 +12,11 @@ public class Subtraction : PagesAbstract
 
     private void OnDrawGizmos()
     {
-        if (examples.Length < 1) examples = new bool[20];
-
+        if (examples == null || examples.Length != 13) examples = new bool[13];
         if (!examples[6])
         {
             if (!examples[0]) return;
-            SetTitle("Vector - Vectort", 6);
+            SetTitle("Vector - Vectort", 1, 6);
             Example_1();
 
             if (!examples[1]) return;
@@ -38,7 +37,7 @@ public class Subtraction : PagesAbstract
         else
         {
             if (!examples[6]) return;
-            SetTitle("Distance", 11);
+            SetTitle("Distance", 7, 11);
             Example_7();
 
             if (!examples[7]) return;
@@ -54,7 +53,7 @@ public class Subtraction : PagesAbstract
             Example_11();
 
             if (!examples[11]) return;
-            SetTitle("Direction", 13);
+            SetTitle("Direction", 12, 13);
             Example_12();
 
             if (!examples[12]) return;

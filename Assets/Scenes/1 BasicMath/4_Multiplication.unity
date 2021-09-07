@@ -155,10 +155,10 @@ MonoBehaviour:
   previous: 0
   object1: {fileID: 915966678}
   object2: {fileID: 506494997}
-  scaleX: 0.75
-  scaleY: 0.38
-  scaleVector: {x: 0.71, y: 0.34, z: 0}
-  missile: 0.36
+  scaleX: 0
+  scaleY: 0
+  scaleVector: {x: 0, y: 0, z: 0}
+  missile: 0
   normalizedMissile: 0
 --- !u!4 &351844852
 Transform:

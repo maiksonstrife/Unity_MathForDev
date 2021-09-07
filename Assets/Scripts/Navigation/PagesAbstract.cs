@@ -12,10 +12,11 @@ public class PagesAbstract : MonoBehaviour
     [SerializeField]
     protected bool previous;
     protected bool[] examples;
+    private int lastChapterEnd;
 
-    protected void SetTitle(string title, int chapterend)
+    protected void SetTitle(string title, int chapterInit, int chapterend)
     {
-        if (currentPage > chapterend) return;
+        if (currentPage < chapterInit || currentPage > chapterend) return;
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
         Handles.Label(Vector3.up * 4, "Page " + currentPage.ToString(), guiStyle);
@@ -60,5 +61,30 @@ public class PagesAbstract : MonoBehaviour
                 examples[i] = true;
             }
         }
+    }
+
+    protected Vector3 RenderToMouse()
+    {
+        #region Mouse To World Position
+
+        Vector2 MousePos = Event.current.mousePosition;
+        float ppp = EditorGUIUtility.pixelsPerPoint;
+        MousePos.y = SceneView.lastActiveSceneView.camera.pixelHeight - MousePos.y * ppp;
+        MousePos.x *= ppp;
+
+        Vector2 MouseWorldPos = SceneView.currentDrawingSceneView.camera.ScreenToWorldPoint(MousePos);
+
+        Vector2 HalfWorldPos = MouseWorldPos * 0.5f;
+
+        Vector2 mouseOffset = Event.current.mousePosition + new Vector2(12, 12);
+        mouseOffset.y = SceneView.lastActiveSceneView.camera.pixelHeight - mouseOffset.y * ppp;
+        mouseOffset.x *= ppp;
+        Vector2 mouseOffsetWorld = SceneView.lastActiveSceneView.camera.ScreenToWorldPoint(mouseOffset);
+
+        #endregion
+
+        Vector2 MouseWorldRay = MouseWorldPos - Vector2.zero;
+
+        return MouseWorldRay.normalized;
     }
 }
