@@ -5,7 +5,7 @@ using UnityEngine;
 public class NormalizedByNormalized : PagesAbstract
 {
     public GameObject ShadowGroup;
-    public Transform MovingCube;
+    public Transform PivotCube;
 
     [Header("The concept of Normalized")]
     [Range(0, 1)]
@@ -13,7 +13,7 @@ public class NormalizedByNormalized : PagesAbstract
 
     private void OnDrawGizmos()
     {
-        if (examples == null || examples.Length != 20) examples = new bool[20];
+        if (examples == null || examples.Length != 12) examples = new bool[12];
 
         ExamplesController();
         SetTitle("The concept of Normalized", 1, 3);
@@ -69,9 +69,9 @@ public class NormalizedByNormalized : PagesAbstract
         Handles.Label(new Vector3(4.5f, 1.5f, 0), "Scalar = " + shadowScalar, guiStyle);
 
         //Rotating Cube
-        Vector3 difference = (new Vector3(3f, 1f, 0) + vectorA) - MovingCube.position;
+        Vector3 difference = (new Vector3(3f, 1f, 0) + vectorA) - PivotCube.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        MovingCube.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+        PivotCube.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
         //Chart Legend
         guiStyle.fontSize = 20;
@@ -178,7 +178,7 @@ public class NormalizedByNormalized : PagesAbstract
         Gizmos.DrawRay(new Vector3(1f, 1f, 0), vectorB * shadowScalar);
         Handles.Label(vectorBProjection + new Vector3(-1.5f, 0, 0), "shadowScale * VectorB");
 
-        MovingCube.transform.rotation = Quaternion.Euler(0,0,52);
+        PivotCube.transform.rotation = Quaternion.Euler(0,0,52);
     }
 
     private void Example_8()

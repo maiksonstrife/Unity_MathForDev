@@ -23,6 +23,10 @@ public class Multiplication : PagesAbstract
     [Range(0, 4.6f)]
     public float normalizedMissile;
 
+    [Header("Divided Missile")]
+    [Range(0, 4.6f)]
+    public float divideddMissile;
+
 
     private void OnDrawGizmos()
     {
@@ -57,7 +61,7 @@ public class Multiplication : PagesAbstract
         if (!examples[8]) return;
         Example_9();
 
-        if (!examples[8]) return;
+        if (!examples[9]) return;
         Example_10();
 
         if (!examples[10]) return;
@@ -114,7 +118,8 @@ public class Multiplication : PagesAbstract
         Gizmos.DrawSphere(object1.position + normalizedMissile * scalarByDirection, 0.2f);
         Gizmos.DrawLine(object1.position, object1.position + normalizedMissile * scalarByDirection);
 
-        if(normalizedMissile > 2 && normalizedMissile  < 2.2) Handles.Label((object1.position + normalizedMissile * scalarByDirection) + new Vector3(0,0.6f), "Double the Direction *2");
+
+        if (normalizedMissile > 2 && normalizedMissile  < 2.2) Handles.Label((object1.position + normalizedMissile * scalarByDirection) + new Vector3(0,0.6f), "Double the Direction *2");
     }
 
     private void Example_19()
@@ -316,7 +321,7 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.zero + new Vector3(0, -0.4f), "Vector3.right * scaleX + Vector3.up * scaleY");
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(Vector3.right * scaleX + Vector3.up * scaleY, 0.2f);
-            Handles.Label(Vector3.up, "You can also scale to use as offset and add a new scale to travel along two Axi's");
+            Handles.Label(Vector3.up, "you can even create a scalar by using multiply to move to a custom position");
     }
 
     private void Example_4()
@@ -328,7 +333,7 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.zero + new Vector3(0, -0.4f), "public float scale, Vector3.right * scaleX");
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(Vector3.right * scaleX, 0.2f);
-            Handles.Label(Vector3.up, "Multiplying is equal to Scalar, a quantity or object is equal 1, the scaling factor is a float that travels along the object");
+            Handles.Label(Vector3.up, "Multiplying is moving trought a Scalar, the scalar is number that travels along the object opr Unity");
     }
 
     private void Example_3()

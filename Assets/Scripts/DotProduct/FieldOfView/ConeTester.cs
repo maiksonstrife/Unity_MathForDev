@@ -16,7 +16,7 @@ public class ConeTester : MonoBehaviour
 
     public bool TestCone(Vector3 other)
     {
-        GetDotDirection(other);
+        GetDotFromObject(other);
 
         if (dotToDegrees)
         {
@@ -32,7 +32,7 @@ public class ConeTester : MonoBehaviour
         }
     }
 
-    private void GetDotDirection(Vector3 other)
+    private void GetDotFromObject(Vector3 other)
     {
         //Get Direction from this object to the other object
         objectDirection = (other - transform.position).normalized;

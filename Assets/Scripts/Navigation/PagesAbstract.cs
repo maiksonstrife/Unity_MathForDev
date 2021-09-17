@@ -12,13 +12,13 @@ public class PagesAbstract : MonoBehaviour
     [SerializeField]
     protected bool previous;
     protected bool[] examples;
-    private int lastChapterEnd;
 
     protected void SetTitle(string title, int chapterInit, int chapterend)
     {
         if (currentPage < chapterInit || currentPage > chapterend) return;
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
+        guiStyle.fontStyle = FontStyle.BoldAndItalic;
         Handles.Label(Vector3.up * 4, "Page " + currentPage.ToString(), guiStyle);
         Handles.Label(Vector3.up * 4 + new Vector3(0, -0.6f), title, guiStyle);
     }
