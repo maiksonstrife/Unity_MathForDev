@@ -1,5 +1,5 @@
 # Math for Dev
-Trying to explain the easiest way possible, how to solve common Math Problems
+Trying to explain the easiest way possible (for myself maybe), how to solve common Math Problems
 
 ### Checklist
 - [x] Addition and Offseting a position.
