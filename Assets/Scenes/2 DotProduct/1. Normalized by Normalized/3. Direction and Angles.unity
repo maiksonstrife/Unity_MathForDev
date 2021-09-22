@@ -357,7 +357,7 @@ MonoBehaviour:
   reconDrone: {fileID: 3229747980277797798}
   playerShip: {fileID: 2374993968054203212}
   scalar: -1
-  Angle: 64
+  Angle: 28
 --- !u!1 &1352483405
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +554,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877036770}
-  m_LocalRotation: {x: -0, y: -0, z: -0.5162923, w: 0.8564125}
+  m_LocalRotation: {x: -0, y: -0, z: -0.4885694, w: 0.87252504}
   m_LocalPosition: {x: 1.433, y: -0.6984, z: 0}
   m_LocalScale: {x: 0.21109079, y: 0.2, z: 1}
   m_Children:
@@ -703,7 +703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3152093965547776502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4875886, y: 0.12692654, z: 0}
+  m_LocalPosition: {x: 3.548006, y: 0.16352558, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 115371538470568094}

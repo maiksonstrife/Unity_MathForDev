@@ -45,17 +45,22 @@ public class DirectionAndAngles : PagesAbstract
         if (examples[8] && currentPage == 9) Example_9();
     }
 
-    private void Example_9()
+    public override void Example_9()
     {
         
     }
 
-    private void Example_8()
+    public override void Example_8()
     {
-        
+        Vector3 reflectingRight =  Vector3.right - RenderToMouse() * Vector3.Dot(Vector3.right, RenderToMouse());
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(Vector3.zero, reflectingRight);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(Vector3.zero, RenderToMouse().normalized);
     }
 
-    private void Example_7()
+    public override void Example_7()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.BoldAndItalic;
@@ -115,7 +120,7 @@ public class DirectionAndAngles : PagesAbstract
         }
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.BoldAndItalic;
@@ -140,7 +145,7 @@ public class DirectionAndAngles : PagesAbstract
         Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "float dotScalar = Mathf.Cos(radians)", guiStyle);
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
@@ -172,7 +177,7 @@ public class DirectionAndAngles : PagesAbstract
         Handles.Label(new Vector3(0f, -1.9f, 0), "And Cosine can be equal to dotproduct, if the Vectors are normalized", guiStyle);
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
@@ -242,7 +247,7 @@ public class DirectionAndAngles : PagesAbstract
         //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
     }
 
-    private void Example_3()
+    public override void Example_3()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
@@ -293,7 +298,7 @@ public class DirectionAndAngles : PagesAbstract
         //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
@@ -323,14 +328,14 @@ public class DirectionAndAngles : PagesAbstract
         //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
     }
 
-    private void Example_1()
+    public override void Example_1()
     {
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
         DrawDotGizmo(true, true);
 
         //TOP TEXT
-        Handles.Label(Vector3.up * 3, "U", guiStyle);
+        Handles.Label(Vector3.up * 3, "DotScalar has many uses when two vectors are normalized", guiStyle);
         Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "One of them, is to determine how close two directions are", guiStyle);
         Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "SLIDER -> Scalar, to change VectorA Direction", guiStyle);
 
@@ -437,9 +442,12 @@ public class DirectionAndAngles : PagesAbstract
         float dotScalar = Vector3.Dot(vectorToReflect, Vector3.right);
         Vector3 reflectedVector = Vector3.right - dotScalar * vectorToReflect;
         return reflectedVector.normalized;
+
+        //Vector3 reflectedVector = vectorToReflect - dotScalar * Vector3.right;
+        //return reflectedVector;
     }
 
-    private void ExamplesController()
+    public override void ExamplesController()
     {
         if(currentPage == 4 || currentPage == 7)
         {

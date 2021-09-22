@@ -16,25 +16,34 @@ public class Scalars : PagesAbstract
     private void OnDrawGizmos()
     {
         if (examples == null || examples.Length !=10) examples = new bool[10];
+        Lessons();
+        ExamplesController();
+    }
+
+    public override void ExamplesController()
+    {
+        SetTitle("What is Scalar", 1, 4);
+        SetTitle("Multiplying", 5, 6);
+        SetTitle("Dividing", 7, 10);
 
         Object1.transform.localScale = new Vector3(1, 1, 1);
 
-        ExamplesController();
-        SetTitle("What is Scalar", 1, 4);
-        if (examples[0] && currentPage == 1) Example_1();
-        if (examples[1] && currentPage == 2) Example_2();
-        if (examples[2] && currentPage == 3) Example_3();
-        if (examples[3] && currentPage == 4) Example_4();
-        SetTitle("Multiplying", 5, 6);
-        if (examples[4] && currentPage == 5) Example_5();
-        if (examples[5] && currentPage == 6) Example_6();
-        SetTitle("Dividing", 7, 10);
-        if (examples[6] && currentPage == 7) Example_7(); 
-        if (examples[7] && currentPage == 8) Example_8();
-        if (examples[8] && currentPage == 9) Example_9();
+        if (currentPage == 4) Object2.gameObject.SetActive(true);
+        else Object2.gameObject.SetActive(false);
+
+        if (currentPage <= 4)
+        {
+            Object1.transform.rotation = Quaternion.Euler(0, 0, 0);
+            Object1.gameObject.SetActive(true);
+        }
+        else
+        {
+            Object1.transform.rotation = Quaternion.Euler(0, 0, 45);
+            Object1.gameObject.SetActive(false);
+        }
     }
 
-    private void Example_9()
+    public override void Example_9()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(-2f, 1), "On Division we have the Interpolation");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(-2f, 0.8f), "Transforming a unity in equal spaces");
@@ -55,7 +64,7 @@ public class Scalars : PagesAbstract
         }
     }
 
-    private void Example_8()
+    public override void Example_8()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(-2f, 1), "We can find any given point from bottom to top using Division");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(-2f, 0.8f), "1/2, 1/3, 1/4, 1/5, of the Object");
@@ -76,7 +85,7 @@ public class Scalars : PagesAbstract
         }
     }
 
-    private void Example_7()
+    public override void Example_7()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "With Division we can find a position inside a Scalar");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, -0.2f), "And apply to a Vector afterwards with multiply");
@@ -90,7 +99,7 @@ public class Scalars : PagesAbstract
         Handles.Label(Object1.position + newVector * half + new Vector3(0.5f, 0), "Scalar : " + half);
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "Scalars is a universal ruler as a measure system");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, -0.2f), "With multiplication we can travel along a vector directly");
@@ -103,7 +112,7 @@ public class Scalars : PagesAbstract
         Handles.Label(Object1.position + newVector * scalar + new Vector3(0.5f, 0), "Scalar : " + scalar);
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "Any Object, Vector, Direction, Space, Constant number, the rule Applies");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, -0.2f), "We can get a position from anything");
@@ -117,7 +126,7 @@ public class Scalars : PagesAbstract
         
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "Any object can be set by the size of 1");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, -0.2f), "if that unity is multiplied by a scalar");
@@ -132,7 +141,7 @@ public class Scalars : PagesAbstract
         Handles.Label((Object1.position - Vector3.up) + Vector3.up * 2 * 0.5f + new Vector3(0.5f, -0.2f), "Scalar : " + scalar);
     }
 
-    private void Example_3()
+    public override void Example_3()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "We can also say that 0,5 is the half of the Cylinder");
 
@@ -140,7 +149,7 @@ public class Scalars : PagesAbstract
         Handles.Label((Object1.position - Vector3.up) + Vector3.up * 2 * 0.5f + new Vector3(0.5f, 0), "scalar : " + 0.5);
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, 0), "Scalar is used to travel to a point along the object");
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(0.5f, -0.2f), "This cylinder we can define it by the size of 1 in Height");
@@ -151,26 +160,10 @@ public class Scalars : PagesAbstract
         Handles.Label(Object1.position + Vector3.up + new Vector3(0.5f,0), "scalar : " + 1);
     }
 
-    private void Example_1()
+    public override void Example_1()
     {
         Handles.Label(Object1.position + Vector3.up * 2 + new Vector3(1f, 0), "Scalar is a number to travel along a Vector Space");
     }
 
-    void ExamplesController()
-    {
-        if (currentPage == 4) Object2.gameObject.SetActive(true);
-        else Object2.gameObject.SetActive(false);
 
-
-        if (currentPage <= 4)
-        {
-            Object1.transform.rotation = Quaternion.Euler(0, 0, 0);
-            Object1.gameObject.SetActive(true);
-        }
-        else
-        {
-            Object1.transform.rotation = Quaternion.Euler(0, 0, 45);
-            Object1.gameObject.SetActive(false);
-        }
-    }
 }

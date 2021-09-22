@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -87,4 +88,36 @@ public class PagesAbstract : MonoBehaviour
 
         return MouseWorldRay.normalized;
     }
+
+    protected void Lessons()
+    {
+        for (int i = 0; i < examples.Length; i++)
+        {
+        string exampleName = "Example_" + (i + 1);
+        MethodInfo mi = this.GetType().GetMethod(exampleName);
+        if (examples[i] && currentPage == i + 1) mi.Invoke(this, null);
+        }
+    }
+
+    public virtual void ExamplesController() { }
+    public virtual void Example_1() { }
+    public virtual void Example_2() { }
+    public virtual void Example_3() { }
+    public virtual void Example_4() { }
+    public virtual void Example_5() { }
+    public virtual void Example_6() { }
+    public virtual void Example_7() { }
+    public virtual void Example_8() { }
+    public virtual void Example_9() { }
+    public virtual void Example_10() { }
+    public virtual void Example_11() { }
+    public virtual void Example_12() { }
+    public virtual void Example_13() { }
+    public virtual void Example_14() { }
+    public virtual void Example_15() { }
+    public virtual void Example_16() { }
+    public virtual void Example_17() { }
+    public virtual void Example_18() { }
+    public virtual void Example_19() { }
+    public virtual void Example_20() { }
 }

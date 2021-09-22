@@ -31,76 +31,22 @@ public class Multiplication : PagesAbstract
     private void OnDrawGizmos()
     {
         if (examples == null || examples.Length != 20) examples = new bool[20];
-        SetTitle("Scaling By Float", 1, 6);
-
-        if (!examples[0]) return;
-        Example_1();
-
-        if (!examples[1]) return;
-        Example_2();
-
-        if (!examples[2]) return;
-        Example_3();
-
-        if (!examples[3]) return;
-        Example_4();
-
-        if (!examples[4]) return;
-        Example_5();
-
-        if (!examples[5]) return;
-        Example_6();
-
-        if (!examples[6]) return;
-        SetTitle("World Space To Local Space", 7, 13);
-        Example_7();
-
-        if (!examples[7]) return;
-        Example_8();
-
-        if (!examples[8]) return;
-        Example_9();
-
-        if (!examples[9]) return;
-        Example_10();
-
-        if (!examples[10]) return;
-        Example_11();
-
-        if (!examples[11]) return;
-        Example_12();
-
-        if (!examples[12]) return;
-        Example_13();
-
-        if (!examples[13]) return;
-        SetTitle("Scaling by Vector", 14, 14);
-        Example_14();
-
-        if (!examples[14]) return;
-        SetTitle("Lock On Target", 15, 17);
-        Example_15();
-
-        if (!examples[15]) return;
-        Example_16();
-
-        if (!examples[16]) return;
-        Example_17();
-
-        if (!examples[17]) return;
-        SetTitle("Normalizing Missile", 18, 20);
-        Example_18();
-
-        if (!examples[18]) return;
-        Example_19();
-
-        if (!examples[19]) return;
-        Example_20();
+        Lessons();
+        ExamplesController();
     }
 
-    private void Example_20()
+    public override void ExamplesController()
     {
-        if (currentPage > 20) return;
+        base.ExamplesController();
+        SetTitle("Scaling By Float", 1, 6);
+        SetTitle("World Space To Local Space", 7, 13);
+        SetTitle("Scaling by Vector", 14, 14);
+        SetTitle("Lock On Target", 15, 17);
+        SetTitle("Normalizing Missile", 18, 20);
+    }
+
+    public override void Example_20()
+    {
         Vector3 target = object2.position - object1.position;
         Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "Use normalizedMissile to travel using normalized TargetDistance");
         Handles.Label(-Vector3.up + new Vector3(0, -1f), "Use Missile to travel using targetDistance");
@@ -122,9 +68,8 @@ public class Multiplication : PagesAbstract
         if (normalizedMissile > 2 && normalizedMissile  < 2.2) Handles.Label((object1.position + normalizedMissile * scalarByDirection) + new Vector3(0,0.6f), "Double the Direction *2");
     }
 
-    private void Example_19()
+    public override void Example_19()
     {
-        if (currentPage > 19) return;
         Vector3 target = object2.position - object1.position;
         Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "If we normalize targetDistance, we get only the direction");
         Handles.Label(-Vector3.up + new Vector3(0, -1f), "That's only 1 unity lenght the targetDistance");
@@ -134,9 +79,8 @@ public class Multiplication : PagesAbstract
         Handles.Label(object1.position + target.normalized, "Normalized targetDistance");
     }
 
-    private void Example_18()
+    public override void Example_18()
     {
-        if (currentPage > 18) return;
         Vector3 targetDistance = object2.position - object1.position;
         Gizmos.DrawLine(object1.position, object1.position + targetDistance);
         Handles.Label(-Vector3.up + new Vector3(0, -0.6f), "See how the missile moved super fast?");
@@ -146,9 +90,8 @@ public class Multiplication : PagesAbstract
         Gizmos.DrawSphere(object1.position + missile * targetDistance, 0.2f);
     }
 
-    private void Example_17()
+    public override void Example_17()
     {
-        if (currentPage > 17) return;
             Handles.Label(object1.position + new Vector3(0, -0.2f), "targetDistance = Object2.position - Object1.position");
             Handles.Label(object1.position + new Vector3(0, -0.6f), "offset = Object1.position");
             Handles.Label(object1.position + new Vector3(0, -1f), "scalar = missile");
@@ -159,9 +102,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(-Vector3.up + new Vector3(0,-0.6f), "Use Missile to move along the Path");
     }
 
-    private void Example_16()
+    public override void Example_16()
     {
-        if (currentPage > 16) return;
             Handles.Label(object1.position + new Vector3(0, -0.2f), "We need the missile path: From player to target");
             Handles.Label(object1.position + new Vector3(0, -0.6f), "Let's use the Subtraction Distance formula");
             Handles.Label(object1.position + new Vector3(0, -1f), "target = Object2.position - Object1.position");
@@ -173,9 +115,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(object2.position + new Vector3(0, 0.4f), "TARGET" + target);
     }
 
-    private void Example_15()
+    public override void Example_15()
     {
-        if (currentPage > 15) return;
             Handles.Label(object1.position + new Vector3(0, -0.2f), "This is the object1, imagine as the Player" + object1.position);
             Gizmos.color = Color.red;
             Gizmos.DrawRay(object1.position, object1.right);
@@ -186,9 +127,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(object2.position + new Vector3(0, -1f), "Let's shoot a missile at him!!!");
     }
 
-    private void Example_14()
+    public override void Example_14()
     {
-        if (currentPage > 14) return;
             Gizmos.color = Color.blue;
             Vector3 offset = object1.position;
             Handles.Label(offset + new Vector3(0, -0.1f), "offset + object1.right * scaleVector.x + object1.up * scaleVector.y");
@@ -207,9 +147,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(offset + new Vector3(0, -1.3f), "Use scale Vector to move along Local Vector X and Y");
     }
 
-    private void Example_13()
+    public override void Example_13()
     {
-        if (currentPage > 13) return;
             Gizmos.color = Color.blue;
             Vector3 offset = object1.position;
             Handles.Label(offset + new Vector3(0, -0.1f), "offset + object1.right * scaleVector.x");
@@ -226,9 +165,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(offset + new Vector3(0, -1.3f), "Use scale Vector to move along Local Vector X");
     }
 
-    private void Example_12()
+    public override void Example_12()
     {
-        if (currentPage > 12) return;
             Gizmos.color = Color.blue;
             Vector3 offset = object1.position;
             Gizmos.DrawSphere(offset, 0.2f);
@@ -240,9 +178,8 @@ public class Multiplication : PagesAbstract
             Gizmos.DrawRay(object1.position, object1.up);
     }
 
-    private void Example_11()
+    public override void Example_11()
     {
-        if (currentPage > 11) return;
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(Vector3.zero, 0.2f);
             Handles.Label(Vector3.zero + new Vector3(0, -0.1f), "Imagine we have a object somewhere");
@@ -250,9 +187,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.zero + new Vector3(0, -0.8f), "Object1.position is the offset then");
     }
 
-    private void Example_10()
+    public override void Example_10()
     {
-        if (currentPage > 10) return;
             Handles.Label(object1.position + new Vector3(0, -0.2f), "This is the object1 Local Position " + object1.position);
             Gizmos.color = Color.red;
             Gizmos.DrawRay(object1.position, object1.right);
@@ -263,15 +199,13 @@ public class Multiplication : PagesAbstract
             Handles.Label(object1.position + new Vector3(0, -1f), "How to move along those axi's ?");
     }
 
-    private void Example_9()
+    public override void Example_9()
     {
-        if (currentPage > 9) return;
             Handles.Label(object1.position + new Vector3(0, -0.2f), "This is the object1 Position " + object1.position);
     }
 
-    private void Example_8()
+    public override void Example_8()
     {
-        if (currentPage > 8) return;
             Handles.Label(Vector3.zero + new Vector3(0, -0.2f), "Vector3.right and Vector3.up draws 2 Vectors, the Basis Vectors");
             Handles.Label(Vector3.zero + new Vector3(0, -0.6f), "Vector3.right is 1 unit to the right of position, and Vector3.up is a vector 1 unit up from the position");
             Handles.Label(Vector3.zero + new Vector3(0, -1f), "The Basis Vectors is a visual measure system, to known your coordinates and orientation");
@@ -282,16 +216,14 @@ public class Multiplication : PagesAbstract
             Gizmos.DrawRay(Vector3.zero, Vector3.up);
     }
 
-    private void Example_7()
+    public override void Example_7()
     {
-        if (currentPage > 7) return;
             Handles.Label(Vector3.zero + new Vector3(0,-0.2f), "This is the World Position " + Vector3.zero);
             Gizmos.DrawSphere(Vector3.zero, 0.2f);
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
-        if (currentPage > 6) return;
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);
             Handles.Label(Vector3.right + new Vector3(0, 0.4f), "Character Direction");
@@ -310,9 +242,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.right * 5 + new Vector3(0, 0.1f), " = The character will be moving 3 units per frame");
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
-        if (currentPage > 5) return;
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);
             Gizmos.color = Color.green;
@@ -324,9 +255,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.up, "you can even create a scalar by using multiply to move to a custom position");
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
-        if (currentPage > 4) return;
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);
             Handles.Label(Vector3.zero + new Vector3(0, -0.1f), "Use scaleX to travel along Vector.right");
@@ -336,9 +266,8 @@ public class Multiplication : PagesAbstract
             Handles.Label(Vector3.up, "Multiplying is moving trought a Scalar, the scalar is number that travels along the object opr Unity");
     }
 
-    private void Example_3()
+    public override void Example_3()
     {
-        if (currentPage > 3) return;
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);
             Handles.Label(Vector3.zero + new Vector3(0, -0.1f), "Thats a Sphere on a scale of half unit (*0.5) of the world position .right");
@@ -347,9 +276,8 @@ public class Multiplication : PagesAbstract
             Gizmos.DrawSphere(Vector3.right *0.5f, 0.2f);
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
-        if (currentPage > 2) return;
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);
             Handles.Label(Vector3.zero + new Vector3(0, -0.1f), "Thats a Sphere on a scale of 1 unit (*1) of the world position Vector3.right");
@@ -358,9 +286,8 @@ public class Multiplication : PagesAbstract
             Gizmos.DrawSphere(Vector3.right * 1, 0.2f);
     }
 
-    void Example_1()
+    public override void Example_1()
     {
-        if (currentPage > 1) return;
             Handles.Label(Vector3.zero + new Vector3(0, -0.2f), "This is World Space Origin (0,0,0)");
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Vector3.zero, Vector3.right);

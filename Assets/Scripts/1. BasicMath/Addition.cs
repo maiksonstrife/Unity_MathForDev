@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Addition : PagesAbstract
 {
+    private GUIStyle guiStyle;
+
     public Transform object1;
     private Vector3 newPosition;
 
@@ -15,35 +17,19 @@ public class Addition : PagesAbstract
     private void OnDrawGizmos()
     {
         if (examples == null || examples.Length != 7) examples = new bool[7];
-        SetTitle("Scaling By Float", 1, 5);
-
-        if (!examples[0]) return;
-        Example_1();
-
-        if (!examples[1]) return;
-        Example_2();
-
-        if (!examples[2]) return;
-        Example_3();
-
-        if (!examples[3]) return;
-        Example_4();
-
-        if (!examples[4]) return;
-        Example_5();
-
-        if (!examples[5]) return;
-        SetTitle("Scaling By Float", 6, 7);
-        Example_6();
-
-        if (!examples[6]) return;
-        Example_7();
+        guiStyle = new GUIStyle();
+        Lessons();
+        ExamplesController();
     }
 
-    private void Example_7()
+    public override void ExamplesController()
     {
-        if (currentPage > 7) return;
+        SetTitle("Scaling By Float", 1, 5);
+        SetTitle("Scaling By Float", 6, 7);
+    }
 
+    public override void Example_7()
+    {
         object1.gameObject.SetActive(false);
         Labeling(newPosition + (new Vector3(0,0.8f)), "But is also a new Vector :D");
         Gizmos.DrawSphere(newPosition, 0.2f);
@@ -51,21 +37,16 @@ public class Addition : PagesAbstract
         DrawWorldSpaceBasisVectors();        
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
-        if (currentPage > 6) return;
-
         Gizmos.DrawSphere(newPosition, 0.2f);
         Labeling(newPosition + (new Vector3(0,1f)), "Remember: The result is a new Position" + newPosition);
         Labeling(object1.position + (new Vector3(0,1f)), "offset" + object1.position);
         Gizmos.DrawLine(object1.transform.position, newPosition);
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
-        if (currentPage > 5) return;
-
-
         Gizmos.DrawRay(Vector3.zero, object1.position);
         DrawBasisVector(object1);
         Labeling(object1.position - Vector3.zero, "Object1 is now the offset");
@@ -80,10 +61,8 @@ public class Addition : PagesAbstract
         newPosition = object1.transform.position + newVector2;
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
-        if (currentPage > 4) return;
-
         Gizmos.DrawRay(Vector3.zero, object1.position);
         DrawWorldSpaceBasisVectors();
         Labeling(object1.position - Vector3.zero + new Vector3(0.5f, 0, 0), "When adding to Vectors together: Vector1 + Vector2");
@@ -91,10 +70,8 @@ public class Addition : PagesAbstract
         Labeling(object1.position - (Vector3.zero - new Vector3(0.5f, -0.8f)), "Vector 1 is a new origin position, when adding another position, you are placing the new vector from the new origin Vector1");        
     }
 
-    private void Example_3()
-    {
-        if (currentPage > 3) return;
-        
+    public override void Example_3()
+    {        
             Gizmos.DrawRay(Vector3.zero, object1.position);
             DrawWorldSpaceBasisVectors();
             Labeling(object1.position - Vector3.zero + new Vector3(0.5f,0,0), "A Vector Is just a position related to another position, when going from one to another it also has a lenght and direction");
@@ -102,20 +79,18 @@ public class Addition : PagesAbstract
             Labeling(object1.position - (Vector3.zero - new Vector3(0.5f, -0.8f)), "When Adding any object to your scene, behind the curtains is always worldspace(0,0,0) + GameObject.transform.position");
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
         Vector3 xOffset = new Vector3(0.2f, 0f, 0f);
         object1.gameObject.SetActive(true);
-        if (currentPage > 2) return;
         
         Handles.Label(object1.position + xOffset, object1.gameObject.name + object1.gameObject.transform.position);
         Labeling(object1.position + new Vector3(0.2f,0.8f), "But is also a Vector");
         Gizmos.DrawRay(Vector3.zero, object1.position);
     }
 
-    void Example_1()
+    public override void Example_1()
     {
-        if (currentPage > 1) return;
         Vector3 xOffset = new Vector3(0.2f, 0f, 0f);
         object1.gameObject.SetActive(true);
         Handles.Label(object1.position + xOffset, object1.gameObject.name + object1.gameObject.transform.position);

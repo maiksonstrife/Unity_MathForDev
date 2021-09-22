@@ -21,29 +21,21 @@ public class Division : PagesAbstract
     {
         if (examples == null || examples.Length != 9) examples = new bool[9];
         guiStyle = new GUIStyle();
-
         ExamplesController();
-        SetTitle("Get back to the Basics", 1, 4);
-        if (examples[0] && currentPage == 1) Example_1();
-        if (examples[1] && currentPage == 2) Example_2();
-        if (examples[2] && currentPage == 3) Example_3();
-        if (examples[3] && currentPage == 4) Example_4();
-        SetTitle("Using the piece number to get a set of positions", 5, 6);
-        if (examples[4] && currentPage == 5) Example_5();
-        if (examples[5] && currentPage == 6) Example_6();
-        SetTitle("Apply Division as Scalar", 7, 7);
-        if (examples[6] && currentPage == 7) Example_7();
-        SetTitle("Interpolating", 8, 9);
-        if (examples[7] && currentPage == 8) Example_8();
-        if (examples[8] && currentPage == 9) Example_9();
+        Lessons();
     }
 
-    private void Example_9()
+    public override void ExamplesController()
     {
-        
+        SetTitle("Get back to the Basics", 1, 4);
+        SetTitle("Using the piece number to get a set of positions", 5, 6);
+        SetTitle("Apply Division as Scalar", 7, 7);
+        SetTitle("Interpolating", 8, 9);
+        if (currentPage <= 5) Object1.position = new Vector3(12.07f, -4, 0);
+        else Object1.position = new Vector3(12.07f, 1, 0);
     }
 
-    private void Example_8()
+    public override void Example_8()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "interpolate is transforming a single offset");
@@ -111,7 +103,7 @@ public class Division : PagesAbstract
         }
     }
 
-    private void Example_7()
+    public override void Example_7()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "Select a Scale Size");
@@ -184,7 +176,7 @@ public class Division : PagesAbstract
         }
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "To break down a Scale to several pieces");
@@ -236,7 +228,7 @@ public class Division : PagesAbstract
         Handles.Label(Vector3.down * 2 + new Vector3(0.1f, -1.5f), "**Starting using the word  DIVISION instead of PIECES, now the concept behind it is Explained");
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "If the Scale Size is greater than the nº of broken pieces");
@@ -307,7 +299,7 @@ public class Division : PagesAbstract
         Handles.Label(cursorPositionRight + new Vector3(0.2f, 0.2f, 0), "Scalar : " + divisionPos);
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "As you change the number of the piece");
@@ -364,7 +356,7 @@ public class Division : PagesAbstract
         Handles.Label(cursorPositionRight + new Vector3(0.2f, 0.2f, 0), "Scalar : " + divisionPos);
     }
 
-    private void Example_3()
+    public override void Example_3()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "It's a double standard");
@@ -407,7 +399,7 @@ public class Division : PagesAbstract
         Handles.Label(Vector3.down * 2 + new Vector3(0.1f, -0.9f), "**This logic works only if the Scale is less or equal thabn the number of pieces");
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
         //Top Label
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "With Divide, we can get a exact position from a scale");
@@ -450,7 +442,7 @@ public class Division : PagesAbstract
         Handles.Label(Vector3.down * 2 + new Vector3(0.1f, -0.9f), "out of 2 pieces (/2), so the result is the size of the first: 0.5");
     }
 
-    private void Example_1()
+    public override void Example_1()
     {
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, 0), "We have a scale, it could anything, a pizza, a circle, a radian, etc.");
         Handles.Label(Vector3.up * 2.8f + new Vector3(0.1f, -0.3f), "We can get any position from it by multiplying by a scalar");
@@ -483,11 +475,5 @@ public class Division : PagesAbstract
         Vector3 bottomLeft = (positionOffset) + new Vector3(-0.3f, 0, 0);
         Vector3 bottomRight = (positionOffset) + new Vector3(0.3f, 0, 0);
         Gizmos.DrawLine(bottomLeft, bottomRight);
-    }
-
-    private void ExamplesController()
-    {
-        if (currentPage <= 5) Object1.position = new Vector3(12.07f, -4, 0);
-        else Object1.position = new Vector3(12.07f, 1, 0);
     }
 }

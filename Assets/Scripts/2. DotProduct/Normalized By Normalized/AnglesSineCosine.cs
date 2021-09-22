@@ -17,22 +17,17 @@ public class AnglesSineCosine : PagesAbstract
     private void OnDrawGizmos()
     {
         if (examples == null || examples.Length != 12) examples = new bool[12];
-
+        Lessons();
         ExamplesController();
-        SetTitle("The Angle", 1, 4);
-        if (examples[0] && currentPage == 1) Example_1();
-        if (examples[1] && currentPage == 2) Example_2();
-        if (examples[2] && currentPage == 3) Example_3();
-        if (examples[3] && currentPage == 4) Example_4();
-        SetTitle("Sine and Cosine", 5, 8);
-        if (examples[4] && currentPage == 5) Example_5();
-        if (examples[5] && currentPage == 6) Example_6();
-        if (examples[6] && currentPage == 7) Example_7();
-        if (examples[7] && currentPage == 8) Example_8();
-        if (examples[8] && currentPage == 9) Example_9();
     }
 
-    private void Example_9()
+    public override void ExamplesController()
+    {
+        SetTitle("The Angle", 1, 4);
+        SetTitle("Sine and Cosine", 5, 8);
+    }
+
+    public override void Example_9()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -121,7 +116,7 @@ public class AnglesSineCosine : PagesAbstract
 
     }
 
-    private void Example_8()
+    public override void Example_8()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -200,7 +195,7 @@ public class AnglesSineCosine : PagesAbstract
         Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Dot Product: " + dotScalar, guiStyle);
     }
 
-    private void Example_7()
+    public override void Example_7()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -271,7 +266,7 @@ public class AnglesSineCosine : PagesAbstract
         Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Dot Product: " + dotScalar, guiStyle);
     }
 
-    private void Example_6()
+    public override void Example_6()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -337,13 +332,9 @@ public class AnglesSineCosine : PagesAbstract
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(Vector3.zero + new Vector3(0, -0.6f), "Cosine : " + Cosine, guiStyle);
         Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Angle: " + signedAngle, guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
     }
 
-    private void Example_5()
+    public override void Example_5()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -409,13 +400,9 @@ public class AnglesSineCosine : PagesAbstract
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(Vector3.zero + new Vector3(0, -0.6f), "Cosine : " + Cosine, guiStyle);
         Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Angle: " + signedAngle, guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
     }
 
-    private void Example_4()
+    public override void Example_4()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -453,11 +440,9 @@ public class AnglesSineCosine : PagesAbstract
 
         //SCALAR APPLY
         Gizmos.color = Color.green;
-        //Gizmos.DrawRay(new Vector3(3f, 1f, 0), vectorB * shadowScalar);
 
         //COSINE / DOT PRODUCT
         Gizmos.color = Color.magenta;
-        //Gizmos.DrawLine(new Vector3(3f, 1, 0) + vectorA, new Vector3(3f, 1f, 0) + vectorB * shadowScalar);
 
         float angle = Vector2.SignedAngle(vectorB, vectorA);
         if (angle <= 0) angle += 360;
@@ -473,14 +458,9 @@ public class AnglesSineCosine : PagesAbstract
         guiStyle.fontSize = 20;
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Angle: " + angle, guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
-
     }
 
-    private void Example_3()
+    public override void Example_3()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -513,11 +493,9 @@ public class AnglesSineCosine : PagesAbstract
 
         //SCALAR APPLY
         Gizmos.color = Color.green;
-        //Gizmos.DrawRay(new Vector3(3f, 1f, 0), vectorB * shadowScalar);
 
         //COSINE / DOT PRODUCT
         Gizmos.color = Color.magenta;
-        //Gizmos.DrawLine(new Vector3(3f, 1, 0) + vectorA, new Vector3(3f, 1f, 0) + vectorB * shadowScalar);
 
         float angle = Vector2.SignedAngle(vectorB, vectorA);
         if (angle <= 0) angle += 360;
@@ -532,13 +510,9 @@ public class AnglesSineCosine : PagesAbstract
         guiStyle.fontSize = 20;
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Angle: " + angle, guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
     }
 
-    private void Example_2()
+    public override void Example_2()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -568,11 +542,9 @@ public class AnglesSineCosine : PagesAbstract
 
         //SCALAR APPLY
         Gizmos.color = Color.green;
-        //Gizmos.DrawRay(new Vector3(3f, 1f, 0), vectorB * shadowScalar);
 
         //COSINE / DOT PRODUCT
         Gizmos.color = Color.magenta;
-        //Gizmos.DrawLine(new Vector3(3f, 1, 0) + vectorA, new Vector3(3f, 1f, 0) + vectorB * shadowScalar);
 
         float angle = Vector2.SignedAngle(vectorB, vectorA);
         if (angle <= 0) angle += 360;
@@ -587,13 +559,9 @@ public class AnglesSineCosine : PagesAbstract
         guiStyle.fontSize = 20;
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Angle: " + angle, guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
     }
 
-    private void Example_1()
+    public override void Example_1()
     {
         GUIStyle guiStyle = new GUIStyle();
         guiStyle.fontSize = 20;
@@ -622,11 +590,9 @@ public class AnglesSineCosine : PagesAbstract
 
         //SCALAR APPLY
         Gizmos.color = Color.green;
-        //Gizmos.DrawRay(new Vector3(3f, 1f, 0), vectorB * shadowScalar);
 
         //COSINE / DOT PRODUCT
         Gizmos.color = Color.magenta;
-        //Gizmos.DrawLine(new Vector3(3f, 1, 0) + vectorA, new Vector3(3f, 1f, 0) + vectorB * shadowScalar);
 
         float angle = Vector2.SignedAngle(vectorB, vectorA);
         if (angle <= 0) angle += 360;
@@ -637,20 +603,6 @@ public class AnglesSineCosine : PagesAbstract
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         PivotCube.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
-        //BELLOW Chart Legend
-        //guiStyle.fontSize = 20;
-        //guiStyle.fontStyle = FontStyle.Bold;
-        //Handles.Label(Vector3.zero + new Vector3(0, -0.6f), "Chart Legend", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -0.9f), "Magenta Line: Dot product Calculation", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.2f), "Scalar: Dot product calculus result", guiStyle);
-        //Handles.Label(Vector3.zero + new Vector3(0, -1.5f), "Green Line: Scalar * VectorA / Scalar * VectorB", guiStyle);
-
-        //float angle = Mathf.Acos(shadowScalar) * Mathf.Rad2Deg;
         Handles.Label(Vector3.zero + new Vector3(0, -0.6f), "Angle: " + angle, guiStyle);
-    }
-
-    private void ExamplesController()
-    {
-
     }
 }
