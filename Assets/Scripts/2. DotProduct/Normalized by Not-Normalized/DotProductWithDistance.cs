@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class ProjectingVectorOnPlane : PagesAbstract
+public class DotProductWithDistance : PagesAbstract
 {
     private GUIStyle guiStyle;
     public Transform player;
@@ -15,7 +15,8 @@ public class ProjectingVectorOnPlane : PagesAbstract
     private Vector3 pivot2;
     private Vector3 pivot3;
     private Vector3 pivot4;
-    public float someScalar;
+    [Range(1,2)]
+    public float someScalar =1.55f;
 
     private void OnDrawGizmos()
     {
@@ -27,9 +28,9 @@ public class ProjectingVectorOnPlane : PagesAbstract
 
     public override void ExamplesController()
     {
-        SetTitle("The problem", 1, 3);
-        SetTitle("Projecting Player Direction Over a Plane", 4, 5);
-        SetTitle("How projecting works", 6, 8);
+        SetTitle("Overview", 1, 1);
+        SetTitle("The Problem", 2, 3);
+        SetTitle("Solution", 4, 8);
 
         pivot1 = new Vector3(0, 1, 0);
         pivot2 = new Vector3(6, 1, 0);
@@ -39,39 +40,42 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Vector3 playerInitialPos = new Vector3(1, 1.5f, 0);
         Vector3 playerSlopePos = new Vector3(10, 1.5f);
 
-        if (currentPage < 2)
+        if (currentPage == 1)
         {
             player.transform.localPosition = playerInitialPos;
+            stage.transform.gameObject.SetActive(false);
+            slope.transform.gameObject.SetActive(false);
+            player.transform.gameObject.SetActive(false);
         }
-        if (currentPage > 1)
-            player.transform.localPosition = playerSlopePos;
-        if (currentPage < 5)
+        if (currentPage == 2)
         {
             stage.transform.gameObject.SetActive(true);
             slope.transform.gameObject.SetActive(true);
             player.transform.gameObject.SetActive(true);
         }
-        if (currentPage > 4)
+        if (currentPage > 2)
         {
             stage.transform.gameObject.SetActive(false);
             slope.transform.gameObject.SetActive(true);
             player.transform.gameObject.SetActive(true);
+            player.transform.localPosition = playerSlopePos;
+
         }
-            
+
         if (currentPage >= 6)
         {
-            stage.transform.gameObject.SetActive(false);
-            slope.transform.gameObject.SetActive(false);
-            player.transform.gameObject.SetActive(false);
+            //stage.transform.gameObject.SetActive(false);
+            //slope.transform.gameObject.SetActive(false);
+            //player.transform.gameObject.SetActive(false);
         }
     }
 
-    private void DrawPlayerMovement()
+    private void DrawPlayerVelocity()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(player.transform.position, player.transform.position + player.transform.right);
-        Gizmos.DrawSphere(player.transform.position + player.transform.right, 0.1f);
-        Handles.Label(player.transform.position + player.transform.right + new Vector3(0, -0.1f), "PlayerMovement");
+        Gizmos.DrawLine(player.transform.position, player.transform.position + player.transform.right * someScalar);
+        Gizmos.DrawSphere(player.transform.position + player.transform.right * someScalar, 0.1f);
+        Handles.Label(player.transform.position + player.transform.right + new Vector3(0, -0.1f), "PlayerVelocity");
     }
 
     public void DrawNormals()
@@ -142,12 +146,9 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Gizmos.DrawSphere(pivot2 + vectorB, 0.1f);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(pivot2, vectorB * dotScalar2);
-        Gizmos.DrawRay(pivot2, NotNormalized * dotScalar2);
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawLine(pivot2 + NotNormalized, pivot2 + vectorB * dotScalar2);
-        Gizmos.DrawLine(pivot2 + vectorB, pivot2 + NotNormalized * dotScalar2);
 
         Handles.Label(pivot2 + Vector3.up * 1.5f + Vector3.left, "Scalar = " + dotScalar2, guiStyle);
 
@@ -156,16 +157,16 @@ public class ProjectingVectorOnPlane : PagesAbstract
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(pivot1 + Vector3.down * 1.2f, "Normalized x Not-Normalized", guiStyle);
         guiStyle.fontSize = 10;
-        Handles.Label(pivot1 + Vector3.down * 1.4f, "Scalar looses distance information");
-        Handles.Label(pivot1 + Vector3.down * 1.6f, "Scalar can be used to Direction Information");
+        Handles.Label(pivot1 + Vector3.down * 1.6f, "PRO: Scalar can be used to Direction Information");
+        Handles.Label(pivot1 + Vector3.down * 1.8f, "CON: Scalar looses distance information");
 
         //Chart Legend 1
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(pivot2 + Vector3.down * 1.2f, "Normalized x Not-Normalized", guiStyle);
         guiStyle.fontSize = 10;
-        Handles.Label(pivot2 + Vector3.down * 1.4f, "Scalar looses some direction information" );
-        Handles.Label(pivot2 + Vector3.down * 1.6f, "Scalar holds distance information" );
+        Handles.Label(pivot2 + Vector3.down * 1.6f, "PRO: Scalar holds distance information");
+        Handles.Label(pivot2 + Vector3.down * 1.8f, "CON: Scalar looses some direction information");
     }
 
     public override void Example_2()
@@ -175,11 +176,11 @@ public class ProjectingVectorOnPlane : PagesAbstract
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(player.transform.position + new Vector3(0, 0.4f), "Player");
         //TOP TEXT
-        Handles.Label(Vector3.up * 3, "However when the player Reaches a slope", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "His PlayerVelocity will make him stumble in the slope", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "His Right is not a correct direction to the new ground he is on", guiStyle);
+        Handles.Label(Vector3.up * 3, "The Player is moving faster than 1 unity, his velocity in Xaxis is equal to " + someScalar, guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "soon he will reach a slope", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "and to correct his direction we have to normalize his velocity", guiStyle);
 
-        DrawPlayerMovement();
+        DrawPlayerVelocity();
     }
 
     public override void Example_3()
@@ -190,10 +191,11 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Handles.Label(player.transform.position + new Vector3(0, 0.4f), "Player");
         //TOP TEXT
         Handles.Label(Vector3.up * 3, "How to solve this problem?", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "What Information do we have?", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "1. PlayerVelocity direction that points To his right", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "The player must adjust his velocity", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "but loose his current velocity is not the right decision", guiStyle);
 
-        DrawPlayerMovement();
+        DrawPlayerVelocity();
+        DrawNormals();
     }
 
     public override void Example_4()
@@ -203,10 +205,17 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Handles.Label(player.transform.position + new Vector3(0, 0.4f), "Player");
         //TOP TEXT
         Handles.Label(Vector3.up * 3, "2. The slope Normal", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "Normals are vectors stored in 3D objects", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "The shows the direction their face is pointing to", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "Finding the Right direction from the slope angle", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "Should retrieve the direction where the player could walk", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.9f), "To get the direction: Normalized x Normalized", guiStyle);
 
-        DrawPlayerMovement();
+        Gizmos.DrawLine(slopePivot, slopePivot + ProjectOnGround(player.transform.right, slopeNormal));
+        Handles.Label(slopePivot + ProjectOnGround(player.transform.right, slopeNormal), "ProjectedDirectionOnPlane");
+
+        Handles.Label(Vector3.down * 0.4f, "easy as the formula");
+        Handles.Label(Vector3.down * 0.6f, "ProjectedDirectionOnPlane = Vector3.right - slopeNormal * vector3.dot(slopeNormal, Vector3.right)");
+
+        DrawPlayerVelocity();
         DrawNormals();
     }
 
@@ -218,113 +227,67 @@ public class ProjectingVectorOnPlane : PagesAbstract
         guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
 
-        DrawNormals();
-        DrawPlayerMovement();
+        //DrawNormals();
 
-        Handles.Label(Vector3.up * 3, "The solution was using the slope normal vector", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "to draw the direction of PlayerMovement over the Slope", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "The question is: ", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.9f), "Where is (direction) in this normal vector?", guiStyle);
-        Handles.Label(Vector3.up * 3 + new Vector3(0, -1.2f), "this is where projection over plane (normal) is needed", guiStyle);
+        Handles.Label(Vector3.up * 3, "With the right direction from the slope: ProjectedDirectionOnPlane", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "is possible to draw his velocity over this direction", guiStyle);
+        Handles.Label(Vector3.down * 0.3f, "But one more problem rises: ", guiStyle);
+        Handles.Label(Vector3.down * 0.6f, "When climbing a slope, his velocity should not remain the same", guiStyle);
+        Handles.Label(Vector3.down * 0.9f, "Thats where Normalized x Not-Normalized enters", guiStyle);
 
-        Gizmos.DrawLine(slopePivot, slopePivot + ProjectOnGround(player.transform.right, slopeNormal));
-        Handles.Label(slopePivot + ProjectOnGround(player.transform.right, slopeNormal), "PlayerMovementProjected", guiStyle);
+
+        //Gizmos.DrawLine(slopePivot, slopePivot + ProjectOnGround(player.transform.right, slopeNormal));
+        //Handles.Label(slopePivot + ProjectOnGround(player.transform.right, slopeNormal), "PlayerMovementProjected", guiStyle);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(player.transform.position, player.transform.position + ProjectOnGround(player.transform.right, slopeNormal) * someScalar);
     }
 
     public override void Example_6()
     {
-        base.Example_6();
-        guiStyle.fontSize = 15;
         guiStyle.fontStyle = FontStyle.Bold;
+        guiStyle.fontSize = 15;
+        //TOP TEXT
+        Handles.Label(Vector3.up * 3, "DirectionProjectedOnPlane is the direction the player will climb", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.3f), "His velocity is it's actual velocity", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.6f), "What happens when projecting", guiStyle);
+        Handles.Label(Vector3.up * 3 + new Vector3(0, -0.9f), "DirectionProjectedOnPlane to PlayerVelocity", guiStyle);
 
-        //Pivot1
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(pivot1, pivot1 + player.transform.right);
-        Handles.Label(pivot1 + player.transform.right, "Right");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(pivot1, pivot1 + Vector3.up);
-        Handles.Label(pivot1 + Vector3.up + new Vector3(0, 0.2f, 0), "Up");
-        Handles.Label(pivot1 * 0.6f, "We know where right is projected");
-        Handles.Label(pivot1 * 0.4f, "if the up vector is pointing up");
+        Gizmos.DrawLine(slopePivot, slopePivot + ProjectOnGround(player.transform.right, slopeNormal));
+        Handles.Label(slopePivot + ProjectOnGround(player.transform.right, slopeNormal), "ProjectedDirectionOnPlane");
 
+        Handles.Label(Vector3.down * 0.4f, "easy as the formula");
+        Handles.Label(Vector3.down * 0.6f, "ProjectedDirectionOnPlane = Vector3.right - slopeNormal * vector3.dot(slopeNormal, Vector3.right)");
 
+        DrawPlayerVelocity();
 
-        //Pivot2
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(pivot2, pivot2 + player.transform.right);
-        Handles.Label(pivot2 + player.transform.right, "PlayerMovement");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(pivot2, pivot2 + slopeNormal);
-        Handles.Label(pivot2 + slopeNormal + new Vector3(0,0.2f,0), "Slope Normal");
-        Handles.Label(pivot2 + Vector3.down * 0.4f, "But what is the position of Right");
-        Handles.Label(pivot2 + Vector3.down * 0.6f, "Under the Slope normal?");
+        //Normalized x Not-Normalized
+        Vector3 pivot2 = new Vector3(6f, 1f, 0);
+        //Vector3 projectedDirection = ProjectOnGround(Vector3.right, slopeNormal).normalized;
+        Vector3 projectedDirection = RenderToMouse();
+        Vector3 playerVelocity = Vector3.right * someScalar;
+        float dotScalar2 = Vector3.Dot(playerVelocity, projectedDirection);
 
-        Vector3 pivot23  = new Vector3(13, 1, 0);
-        //Pivot23
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(pivot23, pivot23 + player.transform.right);
-        Handles.Label(pivot23 + player.transform.right, "PlayerMovement");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(pivot23, pivot23 + slopeNormal);
-        Handles.Label(pivot23 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
-        Handles.Label(pivot23 + Vector3.down * 0.4f, "Projecting slope vector over Vector3.right (Player Movement)");
-        Handles.Label(pivot23 + Vector3.down * 0.6f, "We can see how much slope vector displaced against vector3.right (Player Movement)");
-        Handles.Label(pivot23 + Vector3.down * 0.8f, "But it's a simple float scalar, that does not hold in wich direction it displaced");
+        Gizmos.color = Color.white;
+        Gizmos.DrawRay(pivot2, playerVelocity);
+        Gizmos.DrawSphere(pivot2 + playerVelocity, 0.1f);
+        Gizmos.DrawRay(pivot2, projectedDirection);
+        Gizmos.DrawSphere(pivot2 + projectedDirection, 0.1f);
 
-        Gizmos.color = Color.cyan;
-        float dotScalar = Vector3.Dot(slopeNormal, player.transform.right);
-        Gizmos.DrawLine(pivot23, pivot23 + player.transform.right * dotScalar);
-        Gizmos.DrawLine(pivot23 + player.transform.right * dotScalar, pivot23 + slopeNormal);
-        Handles.Label(pivot23 + player.transform.right * dotScalar, "Dot Projection");
+        Gizmos.color = Color.green;
+        //Gizmos.DrawRay(pivot2, projectedDirection * dotScalar2);
+        //Gizmos.DrawRay(pivot2, playerVelocity * dotScalar2);
 
-        Handles.Label(Vector3.up * 2.8f, "With dot product we know how much the vectors", guiStyle);
-        Handles.Label(Vector3.up * 2.5f, "are pointing towards or backwards each other", guiStyle);
-        guiStyle.fontSize = 20;
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(pivot2 + playerVelocity, pivot2 + projectedDirection * dotScalar2);
+        if(dotScalar2 > 1f)
+            Gizmos.DrawLine(pivot2 + projectedDirection * dotScalar2, pivot2 + projectedDirection);
+        //Gizmos.DrawLine(pivot2 + projectedDirection, pivot2 + playerVelocity * dotScalar2);
 
-        Handles.Label(Vector3.down * 0.6f, "How to get the direction with only the scalar?", guiStyle);
-        Handles.Label(Vector3.down * 1.0f, "", guiStyle);
-        Handles.Label(Vector3.down * 1.2f, "", guiStyle);
+        Handles.Label(pivot2 + Vector3.down * 0.2f, "Original Velocity: " + someScalar);
+        Handles.Label(pivot2 + Vector3.down * 0.4f, "dotProduct: " + dotScalar2);
+        Handles.Label(pivot2 + Vector3.down * 0.6f, "New velocity Scalar:" );
 
-        //Pivot3
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(pivot3, pivot3 + player.transform.right);
-        Handles.Label(pivot3 + player.transform.right, "PlayerMovement");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(pivot3, pivot3 + slopeNormal);
-        Handles.Label(pivot3 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(pivot3, pivot3 + slopeNormal * dotScalar);
-        Handles.Label(pivot3 + slopeNormal * dotScalar + new Vector3(0, 0.2f, 0), "A new vector");
-        Handles.Label(pivot3 + Vector3.down * 0.6f, "Applying the scalar to the slope Vector results in new vector");
-        Handles.Label(pivot3 + Vector3.down * 0.8f, "with the direction and distance between the two");
-
-        //Pivot3
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(pivot4, pivot4 + player.transform.right);
-        Handles.Label(pivot4 + player.transform.right, "PlayerMovement");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(pivot4, pivot4 + slopeNormal);
-        Handles.Label(pivot4 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(pivot4 + player.transform.right, pivot4 + player.transform.right - slopeNormal * dotScalar);
-        Handles.Label(pivot4 + player.transform.right - slopeNormal * dotScalar + new Vector3(0, 0.2f, 0), "The distance");
-        Handles.Label(pivot4 + Vector3.down * 0.6f, "Using it to get the difference from the Vector3.right");
-        Handles.Label(pivot4 + Vector3.down * 0.8f, "Results in Vector3.right projected On Slope Vector");
-
-        //Vector3 reflectingRight = Vector3.right - RenderToMouse() * Vector3.Dot(Vector3.right, RenderToMouse());
-        //REFLECTION COMPARISION
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawRay(Vector3.zero, Vector3.right);
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawRay(Vector3.zero, reflectingRight.normalized);
-        //Handles.Label(reflectingRight.normalized, reflectingRight.normalized.ToString());
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawRay(Vector3.zero, RenderToMouse().normalized);
-        //Handles.Label(RenderToMouse().normalized, RenderToMouse().normalized.ToString());
-        //Gizmos.color = Color.black;
-        //Vector3 reflectedVector = new Vector3(RenderToMouse().normalized.x, -RenderToMouse().normalized.y, RenderToMouse().normalized.z);
-        //Gizmos.DrawRay(Vector3.zero, reflectedVector);
-        //Handles.Label(reflectedVector, reflectedVector.ToString());
     }
 
     public override void Example_7()
@@ -339,11 +302,11 @@ public class ProjectingVectorOnPlane : PagesAbstract
         guiStyle.fontStyle = FontStyle.Bold;
         Handles.Label(pivot1 + Vector3.up + Vector3.left, "1", guiStyle);
         guiStyle.fontSize = 10;
-        Handles.Label(pivot1 + Vector3.up * 1.3f + Vector3.left *2f, "dotProjection = Vector3.Dot(slopeNormal, player.transform.right)", guiStyle);
+        Handles.Label(pivot1 + Vector3.up * 1.3f + Vector3.left * 2f, "dotProjection = Vector3.Dot(slopeNormal, player.transform.right)", guiStyle);
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(pivot1, pivot1 + player.transform.right);
-        Handles.Label(pivot1 + player.transform.right, "PlayerMovement");
+        Handles.Label(pivot1 + player.transform.right, "PlayerVelocity");
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(pivot1, pivot1 + slopeNormal);
         Handles.Label(pivot1 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
@@ -365,7 +328,7 @@ public class ProjectingVectorOnPlane : PagesAbstract
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(pivot2, pivot2 + player.transform.right);
-        Handles.Label(pivot2 + player.transform.right, "PlayerMovement");
+        Handles.Label(pivot2 + player.transform.right, "PlayerVelocity");
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(pivot2, pivot2 + slopeNormal);
         Handles.Label(pivot2 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
@@ -386,11 +349,11 @@ public class ProjectingVectorOnPlane : PagesAbstract
         guiStyle.fontSize = 25;
         Handles.Label(pivot3 + Vector3.up + Vector3.left, "3", guiStyle);
         guiStyle.fontSize = 10;
-        Handles.Label(pivot3 + Vector3.up * 1.3f + Vector3.left * 2f, "PlayerMovement - Dot Projection * Slope Normal", guiStyle);
+        Handles.Label(pivot3 + Vector3.up * 1.3f + Vector3.left * 2f, "PlayerVelocity - Dot Projection * Slope Normal", guiStyle);
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(pivot3, pivot3 + player.transform.right);
-        Handles.Label(pivot3 + player.transform.right, "PlayerMovement");
+        Handles.Label(pivot3 + player.transform.right, "PlayerVelocity");
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(pivot3, pivot3 + slopeNormal);
         Handles.Label(pivot3 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");
@@ -401,12 +364,12 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Handles.Label(pivot3 + player.transform.right * dotScalar, "Dot Projection");
 
         Gizmos.DrawLine(pivot3, pivot3 + slopeNormal * dotScalar);
-        Handles.Label(pivot3 + slopeNormal * dotScalar, "PlayerMovement - Dot Projection * Slope Normal");
+        Handles.Label(pivot3 + slopeNormal * dotScalar, "PlayerVelocity - Dot Projection * Slope Normal");
 
         Gizmos.DrawLine(pivot3 + player.transform.right, pivot3 + (player.transform.right - slopeNormal * dotScalar));
-        Handles.Label(pivot3 + (player.transform.right - slopeNormal * dotScalar) + Vector3.right * 0.1f, "PlayerMovement - Dot Projection * Slope Normal");
+        Handles.Label(pivot3 + (player.transform.right - slopeNormal * dotScalar) + Vector3.right * 0.1f, "PlayerVelocity - Dot Projection * Slope Normal");
 
-        Handles.Label(Vector3.down * 4f, "Subtracting  to the Player Movement");
+        Handles.Label(Vector3.down * 4f, "Subtracting  to the PlayerVelocity");
         Handles.Label(Vector3.down * 4.3f, "we get a position");
 
         //Pivot4
@@ -414,7 +377,7 @@ public class ProjectingVectorOnPlane : PagesAbstract
         Handles.Label(pivot4 + Vector3.up + Vector3.left, "4", guiStyle);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(pivot4, pivot4 + player.transform.right);
-        Handles.Label(pivot4 + player.transform.right, "PlayerMovement");
+        Handles.Label(pivot4 + player.transform.right, "PlayerVelocity");
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(pivot4, pivot4 + slopeNormal);
         Handles.Label(pivot4 + slopeNormal + new Vector3(0, 0.2f, 0), "Slope Normal");

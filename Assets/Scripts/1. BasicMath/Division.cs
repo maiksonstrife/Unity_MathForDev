@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Division : PagesAbstract
 {
     public Transform Object1;
@@ -55,6 +56,12 @@ public class Division : PagesAbstract
         Vector3 bottomLeft = (Object1.position) + new Vector3(-0.3f, 0, 0);
         Vector3 bottomRight = (Object1.position) + new Vector3(0.3f, 0, 0);
         Gizmos.DrawLine(bottomLeft, bottomRight);
+
+
+        Vector3 vectorA = Object1.position;
+        Vector3 vectorB = Object1.position + Vector3.up*2;
+        Gizmos.DrawSphere(Vector3.Lerp(vectorA, vectorB, 0.25f),0.2f);
+        Debug.Log(Vector3.Lerp(vectorA, vectorB, 0.25f));
 
 
         guiStyle.fontSize = 40;
